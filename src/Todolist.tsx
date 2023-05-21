@@ -3,7 +3,7 @@ import {FilterValuesType} from './App';
 import {AddItemForm} from "./AddItemForm";
 import {EditableSpan} from "./EditableSpan";
 import {Delete} from "@mui/icons-material";
-import {Button, IconButton} from "@mui/material";
+import {Button, Checkbox, IconButton} from "@mui/material";
 
 export type TaskType = {
     id: string
@@ -48,7 +48,7 @@ export function Todolist(props: PropsType) {
             </IconButton>
         </h3>
        <AddItemForm addItem={addTask} />
-        <ul>
+        <div>
             {
                 props.tasks.map(t => {
                     const onClickHandler = () => props.removeTask(props.id,t.id)
@@ -59,18 +59,16 @@ export function Todolist(props: PropsType) {
                          props.changeTaskTitle(props.id,t.id, newValue);
                     }
 
-                    return <li key={t.id} className={t.isDone ? "is-done" : ""}>
-                        <input type="checkbox"
-                               onChange={onChangeStatusHandler}
-                               checked={t.isDone}/>
-                                <EditableSpan title={t.title} onChange={onChangeTitleHandler}/>
+                    return <div key={t.id} className={t.isDone ? "is-done" : ""}>
+                        <Checkbox  onChange={onChangeStatusHandler} checked={t.isDone}/>
+                        <EditableSpan title={t.title} onChange={onChangeTitleHandler}/>
                         <IconButton onClick={onClickHandler}>
                             <Delete />
                         </IconButton>
-                    </li>
+                    </div>
                 })
             }
-        </ul>
+        </div>
         <div>
             <Button size={"small"} variant={props.filter === 'all' ? "outlined" : "text"}
                     onClick={onAllClickHandler}>All</Button>
